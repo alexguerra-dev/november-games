@@ -2,6 +2,7 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 
 export default function Rules() {
+    // This is what is rendered in the browser
     return (
         <>
             <Header />

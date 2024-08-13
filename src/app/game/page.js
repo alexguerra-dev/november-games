@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import Die from '../components/Die'
 
 export default function Game() {
+    // This is what is rendered in the browser
     return (
         <>
             <Header />
