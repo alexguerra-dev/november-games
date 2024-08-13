@@ -1,7 +1,15 @@
 {
     "name": "november-games",
+    "description": "A game of my youth.",
     "version": "0.0.1",
     "private": true,
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/alexguerra-dev/november-games"
+    },
+    "homepage": "https://november-games.vercel.app/",
+    "author": "Alexander Guerra",
+    "license": "MIT",
     "scripts": {
         "dev": "next dev",
         "build": "next build",
