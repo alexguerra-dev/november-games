@@ -14,7 +14,73 @@ import Droppable from './components/Droppable'
 
 export default function Home() {
     const [player, setPlayer] = useState('Alex')
-    const [dice, setDice] = useState([1, 2, 3, 3, 5])
+    const [dice, setDice] = useState({
+        dieOne: {
+            id: 1,
+            value: 1,
+            rollable: true,
+            scoring: false,
+            inTheBank: false,
+            partOfACombination: false,
+            typeOfCombination: null,
+        },
+        dieTwo: {
+            id: 2,
+            value: 2,
+            rollable: true,
+            scoring: false,
+            inTheBank: false,
+            partOfACombination: false,
+            typeOfCombination: null,
+        },
+        dieThree: {
+            id: 3,
+            value: 3,
+            rollable: true,
+            scoring: false,
+            inTheBank: false,
+            partOfACombination: false,
+            typeOfCombination: null,
+        },
+        dieFour: {
+            id: 4,
+            value: 4,
+            rollable: true,
+            scoring: false,
+            inTheBank: false,
+            partOfACombination: false,
+            typeOfCombination: null,
+        },
+        dieFive: {
+            id: 5,
+            value: 5,
+            rollable: true,
+            scoring: false,
+            inTheBank: false,
+            partOfACombination: false,
+            typeOfCombination: null,
+        },
+    })
+
+    const [gameState, setGameState] = useState({
+        players: [
+            {
+                id: 1,
+                name: 'Alex',
+                battlecry: 'I am the best!',
+                score: 0,
+            },
+            { id: 2, name: 'Kai', battlecry: 'I am the best!', score: 0 },
+            { id: 3, name: 'Mia', battlecry: 'I am the best!', score: 0 },
+            { id: 4, name: 'Dad', battlecry: 'I am the best!', score: 0 },
+            { id: 5, name: 'Mom', battlecry: 'I am the best!', score: 0 },
+        ],
+        over: false,
+        round: 1,
+        turn: 1,
+        winner: null,
+        currentRoll: [1, 2, 3, 4, 5],
+    })
 
     const [dieOneParent, setDieOneParent] = useState('rolling')
     const [dieTwoParent, setDieTwoParent] = useState('rolling')
@@ -24,29 +90,29 @@ export default function Home() {
 
     const dieOneMarkup = (
         <Draggable id="die-one">
-            <Die value={dice[0]} />
+            <Die value={dice.dieOne.value} />
         </Draggable>
     )
 
     const dieTwoMarkup = (
         <Draggable id="die-two">
-            <Die value={dice[1]} />
+            <Die value={dice.dieTwo.value} />
         </Draggable>
     )
 
     const dieThreeMarkup = (
         <Draggable id="die-three">
-            <Die value={dice[2]} />
+            <Die value={dice.dieThree.value} />
         </Draggable>
     )
     const dieFourMarkup = (
         <Draggable id="die-four">
-            <Die value={dice[3]} />
+            <Die value={dice.dieFour.value} />
         </Draggable>
     )
     const dieFiveMarkup = (
         <Draggable id="die-five">
-            <Die value={dice[4]} />
+            <Die value={dice.dieFive.value} />
         </Draggable>
     )
 
@@ -80,16 +146,55 @@ export default function Home() {
         const { over } = event
         setParent(over ? over.id : null)
     }
+
+    function handleRollAllDice() {
+        const newDice = {
+            dieOne: {
+                ...dice.dieOne,
+                value: Math.floor(Math.random() * 6) + 1,
+            },
+            dieTwo: {
+                ...dice.dieTwo,
+                value: Math.floor(Math.random() * 6) + 1,
+            },
+            dieThree: {
+                ...dice.dieThree,
+                value: Math.floor(Math.random() * 6) + 1,
+            },
+            dieFour: {
+                ...dice.dieFour,
+                value: Math.floor(Math.random() * 6) + 1,
+            },
+            dieFive: {
+                ...dice.dieFive,
+                value: Math.floor(Math.random() * 6) + 1,
+            },
+        }
+
+        setDice(newDice)
+    }
     return (
         <div className="flex flex-col h-screen overflow-hidden">
             <Header />
             <main className="flex-1 bg-stone-500">
-                <h1>November Games</h1>
-                <p>A game of my youth.</p>
+                <table>
+                    <tr>
+                        <th>Player</th>
+                        <th>Score</th>
+                        <th>Battlecry</th>
+                    </tr>
+                    {gameState.players.map((player) => {
+                        return (
+                            <tr>
+                                <td>{player.name}</td>
+                                <td>{player.score}</td>
+                                <td>{player.battlecry}</td>
+                            </tr>
+                        )
+                    })}
+                </table>
 
-                <p>Current player: Player 1</p>
-                <p className="">{player}</p>
-                <section className="flex flex-col scroll-px-10">
+                <section className="flex flex-col">
                     <DndContext onDragEnd={handleDragEndDie}>
                         <div className="flex flex-col">
                             <Droppable id="bank">
@@ -151,16 +256,12 @@ export default function Home() {
                         </div>
                     </DndContext>
 
-                    {/* <DndContext onDragEnd={handleDragEnd}>
-                        {parent === null ? draggableMarkup : null}
-                        {containers.map((id) => (
-                            // We updated the Droppable component so it would accept an `id`
-                            // prop and pass it to `useDroppable`
-                            <Droppable key={id} id={id}>
-                                {parent === id ? draggableMarkup : 'Drop here'}
-                            </Droppable>
-                        ))}
-                    </DndContext> */}
+                    <button
+                        onClick={handleRollAllDice}
+                        className="bg-rose-300 mt-5"
+                    >
+                        Click me to roll ALL the dice
+                    </button>
                 </section>
             </main>
             <Footer />
