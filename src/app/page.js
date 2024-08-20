@@ -89,30 +89,33 @@ export default function Home() {
     const [dieFiveParent, setDieFiveParent] = useState('rolling')
 
     const dieOneMarkup = (
-        <Draggable id="die-one">
+        <Draggable id="die-one" rollable={dice.dieOne.rollable}>
             <Die value={dice.dieOne.value} />
         </Draggable>
     )
 
     const dieTwoMarkup = (
         <Draggable id="die-two">
-            <Die value={dice.dieTwo.value} />
+            <Die value={dice.dieTwo.value} rollable={dice.dieTwo.rollable} />
         </Draggable>
     )
 
     const dieThreeMarkup = (
         <Draggable id="die-three">
-            <Die value={dice.dieThree.value} />
+            <Die
+                value={dice.dieThree.value}
+                rollable={dice.dieThree.rollable}
+            />
         </Draggable>
     )
     const dieFourMarkup = (
         <Draggable id="die-four">
-            <Die value={dice.dieFour.value} />
+            <Die value={dice.dieFour.value} rollable={dice.dieFour.rollable} />
         </Draggable>
     )
     const dieFiveMarkup = (
         <Draggable id="die-five">
-            <Die value={dice.dieFive.value} />
+            <Die value={dice.dieFive.value} rollable={dice.dieFive.rollable} />
         </Draggable>
     )
 
@@ -174,26 +177,9 @@ export default function Home() {
         setDice(newDice)
     }
     return (
-        <div className="flex flex-col h-screen overflow-hidden">
+        <div className="flex flex-col h-screen overscroll-none">
             <Header />
-            <main className="flex-1 bg-stone-500">
-                <table>
-                    <tr>
-                        <th>Player</th>
-                        <th>Score</th>
-                        <th>Battlecry</th>
-                    </tr>
-                    {gameState.players.map((player) => {
-                        return (
-                            <tr>
-                                <td>{player.name}</td>
-                                <td>{player.score}</td>
-                                <td>{player.battlecry}</td>
-                            </tr>
-                        )
-                    })}
-                </table>
-
+            <main className="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-900">
                 <section className="flex flex-col">
                     <DndContext onDragEnd={handleDragEndDie}>
                         <div className="flex flex-col">
