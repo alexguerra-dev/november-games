@@ -177,21 +177,15 @@ export default function Home() {
         setDice(newDice)
     }
     return (
-        <div className="flex flex-col h-screen overscroll-none">
+        <div className="flex h-screen flex-col overscroll-none">
             <Header />
             <main className="flex-1 bg-gradient-to-r from-emerald-500 to-emerald-900">
                 <section className="flex flex-col">
                     <DndContext onDragEnd={handleDragEndDie}>
                         <div className="flex flex-col">
                             <Droppable id="bank">
-                                <div className="bg-gray-400 rounded-xl">
-                                    <p
-                                        className="text-white
-                                        text-opacity-40
-                                        text-center text-s
-                                        align-middle
-                                        p-4"
-                                    >
+                                <div className="rounded-xl bg-gray-400">
+                                    <p className="text-s p-4 text-center align-middle text-white text-opacity-40">
                                         Dice in the bank
                                     </p>
                                     {dieOneParent === 'bank'
@@ -212,14 +206,8 @@ export default function Home() {
                                 </div>
                             </Droppable>
                             <Droppable id="rolling">
-                                <div className="bg-green-400 rounded-xl">
-                                    <p
-                                        className="text-white
-                                        text-opacity-40
-                                        text-center text-s
-                                        align-middle
-                                        p-4"
-                                    >
+                                <div className="rounded-xl bg-green-400">
+                                    <p className="text-s p-4 text-center align-middle text-white text-opacity-40">
                                         Dice that will roll
                                     </p>
                                     {dieOneParent === 'rolling'
@@ -244,7 +232,7 @@ export default function Home() {
 
                     <button
                         onClick={handleRollAllDice}
-                        className="bg-rose-300 mt-5"
+                        className="mt-5 bg-rose-300"
                     >
                         Click me to roll ALL the dice
                     </button>
