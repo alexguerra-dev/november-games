@@ -66,21 +66,54 @@ export default function Home() {
     const [gameState, setGameState] = useState({
         players: [
             {
-                id: 1,
+                id: 0,
                 name: 'Alex',
                 battlecry: 'I am the best!',
                 score: 0,
             },
-            { id: 2, name: 'Kai', battlecry: 'I am the best!', score: 0 },
-            { id: 3, name: 'Mia', battlecry: 'I am the best!', score: 0 },
-            { id: 4, name: 'Dad', battlecry: 'I am the best!', score: 0 },
-            { id: 5, name: 'Mom', battlecry: 'I am the best!', score: 0 },
+            { id: 1, name: 'Jordan', battlecry: 'I am the best!', score: 0 },
+            { id: 2, name: 'Gabe', battlecry: 'I am the best!', score: 0 },
+            { id: 3, name: 'Mom', battlecry: 'I am the best!', score: 0 },
+            { id: 4, name: 'Beto', battlecry: 'I am the best!', score: 0 },
         ],
+        currentPlayer: 0,
         over: false,
         round: 1,
         turn: 1,
         winner: null,
         currentRoll: [1, 2, 3, 4, 5],
+        turns: [
+            {
+                player: 1,
+                round: 1,
+                turn: 1,
+                rolls: null,
+            },
+            {
+                player: 2,
+                round: 1,
+                turn: 2,
+                rolls: null,
+            },
+            {
+                player: 3,
+                round: 1,
+                turn: 3,
+                rolls: null,
+            },
+            {
+                player: 4,
+                round: 1,
+                turn: 4,
+                rolls: null,
+            },
+            {
+                player: 5,
+                round: 1,
+                turn: 5,
+                rolls: null,
+            },
+        ],
     })
 
     const [dieOneParent, setDieOneParent] = useState('rolling')
@@ -144,6 +177,14 @@ export default function Home() {
                 setDieFiveParent(over ? over.id : 'rolling')
                 break
         }
+    }
+
+    function handlePassButton() {
+        console.log('handlePassButton')
+        setGameState({
+            ...gameState,
+            turn: gameState.turn + 1,
+        })
     }
 
     function handleDragEnd(event) {
@@ -250,7 +291,12 @@ export default function Home() {
                                 width={100}
                                 height={100}
                             />
-                            <p>Alex</p>
+                            <p>
+                                {
+                                    gameState.players[gameState.currentPlayer]
+                                        .name
+                                }
+                            </p>
                             <p>1200</p>
                         </div>
                     </div>
@@ -264,7 +310,6 @@ export default function Home() {
                                         {dieTwoMarkup}
                                         {dieThreeMarkup}
                                         {dieFourMarkup}
-                                        {dieOneMarkup}
                                         {dieFiveMarkup}
                                     </div>
                                 </Droppable>
@@ -285,12 +330,22 @@ export default function Home() {
                         <p className="text-5xl text-white">Roll</p>
                     </div>
                     <div className="bg-green col-start-5 col-end-8 row-start-4 row-end-5 rounded-2xl bg-emerald-200 text-center">
-                        <p className="text-5xl text-gray-600">Pass</p>
-                        <button>Pass</button>
+                        <button onClick={handlePassButton}>Pass</button>
                     </div>
 
                     <div className="col-start-8 col-end-11 row-start-1 row-end-5 rounded-2xl bg-pink-200">
                         <p>Leaderboard</p>
+
+                        <p>The current turn is {gameState.turn}</p>
+
+                        {gameState.players.map((player) => {
+                            return (
+                                <div key={player.id}>
+                                    <p>{player.name}</p>
+                                    <p>{player.score}</p>
+                                </div>
+                            )
+                        })}
                     </div>
 
                     <div className="col-start-1 col-end-2 row-start-4 row-end-5 flex basis-0 items-center justify-center rounded-2xl bg-sky-500">
